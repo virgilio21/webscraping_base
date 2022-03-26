@@ -1,0 +1,114 @@
+homes_sites: &homes_sites
+  site_name:
+    url: url_of_site_to_init_scrap
+    pagination_limit: 3
+    phones:
+      days: 3
+      review: 1000
+    mone:
+      usd: 'US'
+    queries:
+      title: 'div.Header-title-block > h1'
+      description: 'section#listing-description > div > div > div.ViewMore-text-description'
+      rooms: 'recamaras\D*(\d+)'
+      bathrooms: 'banos\D*(\d+)'
+      parking: 'estacionamientos\D*(\d+)'
+      covered_area: 'construidos\D*(\d+)'
+      land_area: 'terreno\D*(\d+)'
+      antiquity: '\bconstruido\b *\n?(.*)'
+      price: 'div.PriceSection > span > span:first-child'
+      price_maintenance: 'mantenimiento\D*(\d+)'
+      floor: 'nivel\D*(\w+)'
+      amenities: 'section#listing-amenities > div > div > div.amenities-cols'
+      geo_position: 'section#listing-location > div#js-developmentMap'
+      state: 'div.Navigation-wrapper > div.Navigation-item:nth-of-type(2) > a'
+      city: 'div.Navigation-wrapper > div.Navigation-item:nth-of-type(3) > a'
+      neighborhood: 'div.Navigation-wrapper > div.Navigation-item:nth-of-type(4) > a'
+      pictures: 'div.image > span'
+      important_features_container: 'section#listing-details > div > div > div'
+      publisher: 'div.PdpV4-wrapper div.AgentInfoV2-agent-agency > a'
+      publisher_alternative: 'div.PdpV4-wrapper div.AgentInfoV2-agent-name'
+      phone: 'div#js-viewerContainerRequestPhoneOverlay div.show > span.RequestPhoneFormNumber'
+    index:
+      first_element_to_load: 'div#SearchBarComponentWrapper'
+      for_sale_link: 'div.TabSelect > div:nth-child(2) > a'
+      input_search_field: 'div.location-search--input-wrapper > input'
+      dropdown_property_type: 'div.SearchBar-propertyType > select'
+      house_type_option: "option[value='casa']"
+      apartment_type_option: "option[value='departamento']"
+    listing:
+      first_element_to_load: 'div.row > div.js-listingContainer'
+      dropdown_sorting_homes: 'div.Sorting > select'
+      more_newest_option: "div.Sorting > select > option[data-tracker-key='newest']"
+      home_links: 'div.ListingUnit > a'
+      next_page_link: 'div.next > a'
+    home:
+      phone_link: 'div.PdpV4-wrapper div.AgentInfoV2-requestPhoneSection a'
+      input_phone: 'div#js-viewerContainerRequestPhoneOverlay input#request_phone_phone_input'
+      send_button: 'button#js-requestPhoneBtn'
+
+
+general: &general
+  maps_api:
+    endpoint: 'https://maps.googleapis.com/maps/api/geocode/json'
+    token: 'xxxxxxxx'
+  change_money:
+    currency_converter:
+      endpoint: 'https://free.currencyconverterapi.com/api/v5/convert?q=USD_MXN&compact=y&apiKey='
+      token: 'xxxxxxxxxx'
+    api_layer:
+      endpoint: 'http://apilayer.net/api/live'
+      token: 'xxxxxxxxxxx'
+    cambio_today:
+      endpoint: 'https://api.cambio.today/v1/quotes/USD/MXN/json?quantity=1&key='
+      token: 'xxxxxxxxxx'
+  headless: true
+  states:
+    - Ciudad de México
+    - Jalisco
+    - Campeche
+    - Estado de México
+    - Yucatán
+  type_apartments:
+    - departamento
+    - casa
+  blacklist:
+    - oficina
+    - bodega
+    - vacacional
+    - terreno
+  phone_lada:
+    - 999
+    - 555
+    - 442
+    - 981
+    - 998
+
+db: &db
+  user: xxxx
+  password: xxxx
+
+prod:
+  homes_sites:
+    <<: *homes_sites
+  general:
+    <<: *general
+  db:
+    <<: *db
+    name: xxxx
+    hostname: xxxx
+    port: xxxx
+
+dev:
+  homes_sites:
+    <<: *homes_sites
+  general:
+    <<: *general
+    headless: false
+    states:
+      - Ciudad de México
+  db:
+    <<: *db
+    name: xxxx
+    hostname: xxxx
+    port: xxxx
