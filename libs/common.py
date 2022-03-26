@@ -172,9 +172,10 @@ def get_price_from_text(price_text):
     """Extract the price from a text string"""
 
     dirty_price = price_text.replace(',', '')
-    price = float(re.search(r'\d+', dirty_price).group())
+    price_match = re.search(r'\d+', dirty_price)
 
-    return price
+    if price_match:
+        return float(price_match.group())
 
 
 def is_usd_price(mone_dollar, price_raw_text,):
